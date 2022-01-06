@@ -34,7 +34,7 @@ void makePlots::Init()
 	fChain->SetBranchAddress("header", header, &b_header);
 	fChain->SetBranchAddress("temperature", &temperature, &b_temperature);
 	fChain->SetBranchAddress("time", &time, &b_time);
-
+	display_flag=true;
 	// Set batch mode 
 	if(display_flag)
 		gROOT->SetBatch(kFALSE); 
@@ -150,7 +150,7 @@ void makePlots::Loop()
 	g_pedestal->SetLineWidth(0);
 	g_pedestal->GetXaxis()->SetTitle("ChannelID");
 	g_pedestal->GetYaxis()->SetTitle("ADC");
-	
+
 	TGraph *g_noise = new TGraph(NCHANNELS,ChannelID,FitSigma);
 	g_noise->SetName("Noise");
 	g_noise->SetTitle("Noise");
@@ -163,22 +163,26 @@ void makePlots::Loop()
 	if( display_flag ){
 		h_pedestal[40]->Draw();
 		c->Update();
-		gPad->WaitPrimitive();
-		
+		//gPad->WaitPrimitive();
+
 		g_pedestal->Draw("AP");
 		c->Update();
-		gPad->WaitPrimitive();
+		//gPad->WaitPrimitive();
+		sprintf(title,"plots/%s_pedestal.pdf",outf.c_str());
+		c->SaveAs(title);
 		
 		g_noise->Draw("AP");
 		c->Update();
-		gPad->WaitPrimitive();
+		//gPad->WaitPrimitive();
+		sprintf(title,"plots/%s_noise.pdf",outf.c_str());
+		c->SaveAs(title);
 	}
 
 	// Save plots to pdf
-	sprintf(title,"plots/%s_pedestal.pdf",outf.c_str());
-	g_pedestal->SaveAs(title);
-	sprintf(title,"plots/%s_noise.pdf",outf.c_str());
-	g_noise->SaveAs(title);
+	// sprintf(title,"plots/%s_pedestal.pdf",outf.c_str());
+	// g_pedestal->SaveAs(title);
+	// sprintf(title,"plots/%s_noise.pdf",outf.c_str());
+	// g_noise->SaveAs(title);
 
 	/// Write Graph to file 
 	outfile->cd();  // You could create another TDirectory to write the graphs 
