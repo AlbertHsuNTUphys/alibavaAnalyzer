@@ -4,7 +4,7 @@ This should be a starting point for new comers to get familiar with c++ and root
 * Download and build
 *root is required, if you haven't install it, please go to https://root.cern.ch and download it first!*
 #+BEGIN_SRC bash
-git clone https://github.com/rslu/aliabaAnalyzer.git
+git clone https://github.com/rslu/alibavaAnalyzer.git
 cd alibavaAnalyzer
 sudo easy_install pip
 pip3 install --user numpy root_numpy h5py
